@@ -1,5 +1,5 @@
 const request = require('supertest');
-const { app, parseReq } = require('../lib/app');
+const { app, parseReq, getFileInfo } = require('../lib/app');
 
 describe('application routes', () => {
   it('returns a plain text "hi" on a "/" get request', () => {
@@ -94,5 +94,29 @@ describe('Utility functions', () => {
     const { path, method } = parseReq(req);
     expect(path).toEqual('/dog');
     expect(method).toEqual('GET');
+  });
+
+  it('returns an object with the file information for a GET /red request', () => {
+    const path = '/red';
+    const method = 'GET';
+
+    const fileInfo = getFileInfo(path, method);
+    expect(fileInfo).toEqual({
+      'file': 'red.html',
+      'Content-Type': 'text/html',
+      'status': 200
+    });
+  });
+
+  it('returns an object with the file information for a POST / request', () => {
+    const path = '/';
+    const method = 'POST';
+
+    const fileInfo = getFileInfo(path, method);
+    expect(fileInfo).toEqual({
+      'file': 'sorry.txt',
+      'Content-Type': 'text/plain',
+      'status': 400
+    });
   });
 });
