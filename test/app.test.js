@@ -2,13 +2,23 @@ const request = require('supertest');
 const app = require('../lib/app');
 
 describe('application routes', () => {
-  it('returns a plain text "hi" on a "/" request', () => {
+  it('returns a plain text "hi" on a "/" get request', () => {
     return request(app)
       .get('/')
       .then(res => {
         expect(res.type).toEqual('text/plain');
         expect(res.status).toEqual(200);
         expect(res.text).toEqual(expect.stringContaining('hi'));
+      });
+  });
+
+  it('returns a plain text "Sorry!" on a "/" post request', () => {
+    return request(app)
+      .post('/')
+      .then(res => {
+        expect(res.type).toEqual('text/plain');
+        expect(res.status).toEqual(400);
+        expect(res.text).toEqual(expect.stringContaining('Sorry!'));
       });
   });
   
