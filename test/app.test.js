@@ -6,6 +6,7 @@ describe('application routes', () => {
     return request(app)
       .get('/red')
       .then(res => {
+        expect(res.type).toEqual('text/html');
         expect(res.status).toEqual(200);
         expect(res.text).toEqual(expect.stringContaining('<h1>red</h1>'));
       });
@@ -15,6 +16,7 @@ describe('application routes', () => {
     return request(app)
       .get('/blue')
       .then(res => {
+        expect(res.type).toEqual('text/html');
         expect(res.status).toEqual(200);
         expect(res.text).toEqual(expect.stringContaining('<h1>blue</h1>'));
       });
@@ -24,6 +26,7 @@ describe('application routes', () => {
     return request(app)
       .get('/green')
       .then(res => {
+        expect(res.type).toEqual('text/html');
         expect(res.status).toEqual(200);
         expect(res.text).toEqual(expect.stringContaining('<h1>green</h1>'));
       });
@@ -33,6 +36,7 @@ describe('application routes', () => {
     return request(app)
       .get('/badpath')
       .then(res => {
+        expect(res.type).toEqual('text/html');
         expect(res.status).toEqual(404);
         expect(res.text).toEqual(expect.stringContaining('<h1>Not Found</h1>'));
       });
