@@ -42,6 +42,17 @@ describe('application routes', () => {
       });
   });
 
+  it('returns the green page on a "/green" get request', () => {
+    return request(app)
+      .get('/dog')
+      .then(res => {
+        console.log(res.text);
+        expect(res.type).toEqual('application/json');
+        expect(res.status).toEqual(200);
+        expect(JSON.parse(res.text)).toMatchObject({ 'name': 'spot', 'age': 5, 'weight': '20lbs' });
+      });
+  });
+
   it('returns the not-found page on a bad path request', () => {
     return request(app)
       .get('/badpath')
