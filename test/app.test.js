@@ -20,6 +20,15 @@ describe('application routes', () => {
       });
   });
 
+  it('returns the green page on a "/green" get request', () => {
+    return request(app)
+      .get('/green')
+      .then(res => {
+        expect(res.status).toEqual(200);
+        expect(res.text).toEqual(expect.stringContaining('<h1>green</h1>'));
+      });
+  });
+
   it('returns the not-found page on a bad path request', () => {
     return request(app)
       .get('/badpath')
