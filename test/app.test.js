@@ -11,6 +11,15 @@ describe('application routes', () => {
       });
   });
 
+  it('returns the blue page on a "/blue" get request', () => {
+    return request(app)
+      .get('/blue')
+      .then(res => {
+        expect(res.status).toEqual(200);
+        expect(res.text).toEqual(expect.stringContaining('<h1>blue</h1>'));
+      });
+  });
+
   it('returns the not-found page on a bad path request', () => {
     return request(app)
       .get('/badpath')
