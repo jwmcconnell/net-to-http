@@ -1,5 +1,5 @@
 const request = require('supertest');
-const app = require('../lib/app');
+const { app, parseReq } = require('../lib/app');
 
 describe('application routes', () => {
   it('returns a plain text "hi" on a "/" get request', () => {
@@ -80,5 +80,19 @@ describe('application routes', () => {
         expect(res.status).toEqual(404);
         expect(res.text).toEqual(expect.stringContaining('<h1>Not Found</h1>'));
       });
+  });
+});
+
+describe('Utility functions', () => {
+  it('returns the path and method for the given request', () => {
+    const req = `GET /dog HTTP/1.1
+    Host: 127.0.0.1:50084
+    Accept-Encoding: gzip, deflate
+    User-Agent: node-superagent/3.8.3
+    Connection: close`;
+
+    const { path, method } = parseReq(req);
+    expect(path).toEqual('/dog');
+    expect(method).toEqual('GET');
   });
 });
