@@ -10,4 +10,13 @@ describe('application routes', () => {
         expect(res.text).toEqual(expect.stringContaining('<h1>red</h1>'));
       });
   });
+
+  it('returns the not-found page on a bad path request', () => {
+    return request(app)
+      .get('/badpath')
+      .then(res => {
+        expect(res.status).toEqual(200);
+        expect(res.text).toEqual(expect.stringContaining('<h1>Not Found</h1>'));
+      });
+  });
 });
