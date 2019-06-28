@@ -52,9 +52,19 @@ describe('application routes', () => {
       });
   });
 
-  it('returns the green page on a "/green" get request', () => {
+  it('returns dog json object on a "/dog" req', () => {
     return request(app)
       .get('/dog')
+      .then(res => {
+        expect(res.type).toEqual('application/json');
+        expect(res.status).toEqual(200);
+        expect(JSON.parse(res.text)).toMatchObject({ 'name': 'rover', 'age': 2, 'weight': '15lbs' });
+      });
+  });
+
+  it('returns custom dog object on a "/dog?..." request', () => {
+    return request(app)
+      .get('/dog?name=spot&age=5&weight=20lbs')
       .then(res => {
         expect(res.type).toEqual('application/json');
         expect(res.status).toEqual(200);
