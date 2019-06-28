@@ -1,5 +1,5 @@
 const request = require('supertest');
-const { app, parseReq, getFileInfo } = require('../lib/app');
+const { app, parseReq, getFileInfo, parsePath } = require('../lib/app');
 
 describe('application routes', () => {
   it('returns a plain text "hi" on a "/" get request', () => {
@@ -118,5 +118,19 @@ describe('Utility functions', () => {
       'Content-Type': 'text/plain',
       'status': 400
     });
+  });
+
+  it('returns the query object and the begining of the path for a given path', () => {
+    const path = '/dog?name=spot&age=5&weight=20lbs';
+    const { shortPath, query } = parsePath(path);
+    expect(shortPath).toBe('/dog');
+    expect(query).toEqual({ 'age': 5, 'name': 'spot', 'weight': '20lbs' });
+  });
+
+  it('returns the path for a path with no query string', () => {
+    const path = '/dog';
+    const { shortPath, query } = parsePath(path);
+    expect(shortPath).toBe('/dog');
+    expect(query).toEqual(null);
   });
 });
