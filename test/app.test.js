@@ -2,6 +2,16 @@ const request = require('supertest');
 const app = require('../lib/app');
 
 describe('application routes', () => {
+  it('returns a plain text "hi" on a "/" request', () => {
+    return request(app)
+      .get('/')
+      .then(res => {
+        expect(res.type).toEqual('text/plain');
+        expect(res.status).toEqual(200);
+        expect(res.text).toEqual(expect.stringContaining('hi'));
+      });
+  });
+  
   it('returns the red page on a "/red" get request', () => {
     return request(app)
       .get('/red')
