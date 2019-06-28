@@ -56,7 +56,6 @@ describe('application routes', () => {
     return request(app)
       .get('/dog')
       .then(res => {
-        console.log(res.text);
         expect(res.type).toEqual('application/json');
         expect(res.status).toEqual(200);
         expect(JSON.parse(res.text)).toMatchObject({ 'name': 'spot', 'age': 5, 'weight': '20lbs' });
